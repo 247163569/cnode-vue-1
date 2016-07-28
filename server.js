@@ -3,12 +3,8 @@ var app = express()
 
 app.use(express.static(__dirname))
 
-// app.use(function (req, res, next) {
-// 	if (req.path !== "/" || ! req.path.includes("dist")) {
-// 		res.sendFile(path.join(__dirname, "/index.html"))
-// 	}
-
-// 	next()
-// })
+app.get("*", (req, res) => {
+	res.sendFile(path.resolve(__dirname, "./index.html"))
+})
 
 app.listen(process.env.PORT || 8080)
