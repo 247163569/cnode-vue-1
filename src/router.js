@@ -13,7 +13,8 @@ import VueRouter from "vue-router"
 Vue.use(VueRouter)
 
 var router = new VueRouter({
-	history: true,
+	root:"/cnode",
+	history: true
 })
 
 // router.map({
