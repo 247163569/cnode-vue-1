@@ -1,10 +1,12 @@
 .post-content {
 	width: 100%;
-	min-height: 2rem;
-	padding: 0.2rem;
+	min-height: 5rem;
+	padding: 0 .3rem;
 	border: none;
 	outline: none;
 	resize: none;
+	line-height: .6rem;
+	box-sizing: border-box;
 }
 
 .post-list {
@@ -25,7 +27,7 @@
 	outline: none;
 }
 .post-item input::-webkit-input-placeholder {
-	color: #555;
+	color: #999;
 }
 .tag-item::after {
 	content: attr(data-tag);
@@ -34,16 +36,21 @@
 }
 
 .go-post-btn {
-	width: 0.8rem;
+	width: 1rem;
 	position: absolute;
 	top: 50%;
 	right: 0.2rem;
-	color: #9FBE96;
+	color: #FFF;
 	text-align: center;
-	line-height: 0.52rem;
+	font-size: .28rem;
+	line-height: .55rem;
 	border-radius: 5px;
-	background-color: #3F7D2D;
+	opacity: .5;
+	background-color: #1ABC9C;
 	transform: translateY(-50%);
+}
+.go-post-btn.active {
+	opacity: 1;
 }
 .highlight {
 	color: #FFF;
@@ -51,27 +58,45 @@
 }
 
 .select-tag {
-	width: 6.4rem;
+	width: 7.5rem;
 	height: 100%;
 	position: fixed;
 	top: 0;
 	z-index: 10;
 	background-color: rgba(0, 0, 0, 0.4);
-}
-.select-transition {
 	transition: all 0.3s;
 }
-.select-enter, .select-leave {
+.select-enter, .select-leave-active {
 	opacity: 0;
 }
+.select-enter ul, .select-leave-active ul {
+	transform: translateY(100%);
+}
+
+
+/* .modal-transition, .modal-transition {
+	transition: opacity .3s;
+}
+.modal-enter, .modal-leave {
+	opacity: 0;
+}
+.modal-enter .modal-content, .modal-leave .modal-content {
+	transform: translateY(100%);
+} */
+
+
 .select-tag ul {
 	width: 100%;
 	position: absolute;
 	bottom: 0;
+	transition: all 0.3s;
 }
 .select-tag li {
 	text-align: center;
 	line-height: 0.8rem;
 	border-bottom: 1px solid #EEE;
 	background-color: #FFF;
+}
+.select-tag li:last-child {
+	color: #999;
 }

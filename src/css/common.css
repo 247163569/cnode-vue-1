@@ -8,14 +8,14 @@ $border: 1px solid #333;
 
 .back-btn-wrap {
 	display: flex;
-	width: 0.7rem;
-	height: 0.7rem;
+	width: .8rem;
+	height: .8rem;
 	position: absolute;
 }
 
 .back-btn {
-	width: 0.24rem;
-	height: 0.24rem;
+	width: .28rem;
+	height: .28rem;
 	margin: auto;
 	border-bottom: $border;
 	border-left: $border;

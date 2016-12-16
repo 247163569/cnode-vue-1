@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <link rel="shortcut icon" href="/favicon.ico" />
-<link rel="stylesheet" href="/dist/app.css"></head>
+</head>
 <title>cnode - vue</title>
 
 <body>
 	<div id="app"></div>
 
-	<script src="/static/vue.js"></script>
-	<script src="/dist/app.js"></script></body>
+	<script src="/static/cnode/commons.js"></script>
+</body>
 </html>

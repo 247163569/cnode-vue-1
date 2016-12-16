@@ -1,25 +1,27 @@
 <style src="../css/message.css"></style>
 
 <template>
-	<ul class="message-list">
-		<li v-for="item in items">
-			<div class="item-user-bar">
-				<img class="avatar" :src="item.author.avatar_url">
-				<div class="item-detail">
-					<span class="username" v-text="item.author.loginname"></span>
-					<p class="item-time" v-text="item.reply.create_at | timeFormat"></p>
+	<div>
+		<ul class="message-list">
+			<li v-for="item of items">
+				<div class="item-user-bar">
+					<img class="avatar" :src="item.author.avatar_url">
+					<div class="item-detail">
+						<span class="username" v-text="item.author.loginname"></span>
+						<p class="item-time" v-text="item.reply.create_at | timeFormat"></p>
+					</div>
 				</div>
-			</div>
-			<div class="item-content">
-				<p class="item-content-title" v-html="item.reply.content"></p>
-			</div>
-			<div class="item-quote">
-				<a :href="'/topic/' + item.topic.id" v-text="item.topic.title"></a>
-			</div>
-		</li>
-	</ul>
-	<loading :loading="loading"></loading>
-	<div class="no-data" v-if="noData">空空如也( >﹏&lt;。)～</div>
+				<div class="item-content">
+					<p class="item-content-title" v-html="item.reply.content"></p>
+				</div>
+				<div class="item-quote">
+					<a :href="'/topic/' + item.topic.id" v-text="item.topic.title"></a>
+				</div>
+			</li>
+		</ul>
+		<loading :loading="loading"></loading>
+		<div class="no-data" v-if="noData">空空如也( >﹏&lt;。)～</div>
+	</div>
 </template>
 
 <script>
@@ -39,10 +41,10 @@
 		components: {
 			loading
 		},
-		route: {
-			data() {
-				this.getMessages()
-			}
+		beforeRouteEnter(to, from, next) {
+			next((vm) => {
+				vm.getMessages()
+			})
 		},
 		filters: {
 			timeFormat(value) {

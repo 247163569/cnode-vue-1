@@ -1,12 +1,22 @@
-require("./css/normalize.css")
-require("./css/common.css")
-require("./css/app.css")
-require("./css/home.css")
-require("./css/topic.css")
-require("./css/layout-box.css")
-require("./css/message.css")
+import "./css/normalize.css"
+import "./css/common.css"
+import "./css/app.css"
 
+import "./css/home.css"
+import "./css/topic.css"
+import "./css/layout-box.css"
+import "./css/message.css"
+
+
+import Vue from "vue"
 import router from "./router"
-import APP from "./app.vue"
+import App from "./app.vue"
+import store from "./vuex/store"
 
-router.start(APP, "#app")
+new Vue({
+	el: "#app",
+	store,
+	router,
+	...App,
+	//render: h => h(App)
+})

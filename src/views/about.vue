@@ -1,15 +1,17 @@
 <style src="../css/about.css"></style>
 
 <template>
-	<header class="header topic-hd">
-		<h2 class="title">关于</h2>
-	</header>
-	<ul class="about-list">
-		<li v-for="item in items">
-			<h5 v-text="item.title"></h5>
-			<p v-html="item.content"></p>
-		</li>
-	</ul>
+	<div id="app">
+		<header class="header topic-hd">
+			<h2 class="title">关于</h2>
+		</header>
+		<ul class="about-list">
+			<li v-for="item in items">
+				<h5 v-text="item.title"></h5>
+				<p v-html="item.content"></p>
+			</li>
+		</ul>
+	</div>
 </template>
 
 <script>

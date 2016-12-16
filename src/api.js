@@ -1,5 +1,5 @@
-import promise from "es6-promise"
-import "whatwg-fetch"
+//import promise from "es6-promise"
+//import "whatwg-fetch"
 
 export let getList = async (page, tag) => {
 	let response = await fetch(`https://cnodejs.org/api/v1/topics?page=${page}&limit=20&tab=${tag}`, {

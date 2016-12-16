@@ -1,86 +1,93 @@
 <style src="../css/topic.css"></style>
 
 <template>
-	<header class="header">
-		<a class="back-btn-wrap" v-link="{path: '/'}">
-			<i class="back-btn"></i>
-		</a>
-		<h2 class="title">帖子正文</h2>
-	</header>
-	<div class="topic-container" v-if="! loading">
-		<div class="topic-content">
-			<div class="topic-header">
-				<h1 class="topic-title" v-text="topic.title"></h1>
-				<p>
-					<img class="topic-avatar" :src="topic.author.avatar_url">
-					<span class="topic-username" v-text="topic.author.loginname"></span>
-					<span>·</span>
-					<span v-text="topic.create_at | timeFormat"></span>
-				</p>
+	<div id="app">
+		<header class="header">
+			<router-link to="/" class="back-btn-wrap">
+				<i class="back-btn"></i>
+			</router-link>
+			<h2 class="title">帖子正文</h2>
+		</header>
+		<div class="topic-container" v-if="! loading">
+			<div class="topic-content">
+				<div class="topic-header">
+					<h1 class="topic-title" v-text="topic.title"></h1>
+					<p>
+						<img class="topic-avatar" :src="topic.author.avatar_url">
+						<span class="topic-username" v-text="topic.author.loginname"></span>
+						<span>·</span>
+						<span>
+							{{topic.create_at | timeFormat}}
+						</span>
+					</p>
+				</div>
+				<div v-html="topic.content"></div>
 			</div>
-			<div v-html="topic.content"></div>
-		</div>
-		<div class="reply">
-			<div class="reply-count" v-text="topic.reply_count | textFormat"></div>
-			<ul class="reply-list">
-				<li class="reply-item" v-for="item in topic.replies">
+			<div class="reply">
+				<div class="reply-count">
+					{{topic.reply_count | textFormat}}
+				</div>
+				<ul class="reply-list">
+					<item v-for="item of topic.replies" :item="item">
 					<div>
-						<img class="avatar" :src="item.author.avatar_url">
-					</div>
-					<div>
-						<a class="reply-name" :href="'https://cnodejs.org/user/' + item.author.loginname" v-text="item.author.loginname"></a>
-						<p class="reply-content" v-html="item.content"></p>
-						<p class="reply-ft">
-							<span v-text="item.create_at | timeFormat"></span>
-							<template v-if="loginState">
-								<template v-if="item.author.loginname !== user.loginname">
-									<span class="reply-btn" v-touch="subReply(item)">回复</span>
-									<span class="like" v-touch="like(item.id, item)" v-text="item.ups.includes('5617694c2fb53d5b4f2329bd') ? '取消赞' : '赞'"></span>
-									<span class="like-count" v-text="item.ups.length + ' 赞'"></span>
+							<a class="reply-name" target="_blank" :href="'https://cnodejs.org/user/' + item.author.loginname" v-text="item.author.loginname"></a>
+							<p class="reply-content" v-html="item.content"></p>
+							<p class="reply-ft">
+								<span>
+									{{item.create_at | timeFormat}}
+								</span>
+								<template v-if="loginState">
+									<template v-if="item.author.loginname !== nickname">
+										<span class="reply-btn" @click="subReply(item)">回复</span>
+										<span class="like" @click="like(item.id, item)" v-text="item.ups.includes(userID) ? '取消赞' : '赞'"></span>
+										<span class="like-count" v-text="item.ups.length + ' 赞'"></span>
+									</template>
+									<template v-else>
+										<span class="del" @click="del">删除</span>
+									</template>
 								</template>
 								<template v-else>
-									<span class="del" v-touch="del">删除</span>
+									<span class="like" @click="forLike">赞</span>
+									<span class="like-count" v-text="item.ups.length + ' 赞'"></span>
 								</template>
-							</template>
-							<template v-else>
-								<span class="like" v-touch="forLike">赞</span>
-								<span class="like-count" v-text="item.ups.length + ' 赞'"></span>
-							</template>
-							<div class="reply-box" v-if="item.replyState">
-								<div class="reply-edit-content-wrap">
-									<img :src="avatar">
-									<input type="text" class="reply-edit-content" placeholder="留下你的评论" v-focus="item.replyState" v-model="item.replyContent" @keydown.enter="toSubReply(item)">
+								<div class="reply-box" v-if="item.replyState">
+									<div class="reply-edit-content-wrap">
+										<img :src="avatar">
+										<input type="text" class="reply-edit-content" placeholder="留下你的评论" v-model="item.replyContent" @keydown.enter="toSubReply(item)">
+									</div>
+									<div class="reply-edit-btn-wrap">
+										<span class="reply-edit-btn" @click="item.replyState = false">取消</span>
+										<span class="reply-edit-btn" @click="toSubReply(item)">评论</span>
+									</div>
 								</div>
-								<div class="reply-edit-btn-wrap">
-									<span class="reply-edit-btn" v-touch="item.replyState = false">取消</span>
-									<span class="reply-edit-btn" v-touch="toSubReply(item)">评论</span>
-								</div>
-							</div>
-						</p>
+							</p>
+						</div>
+					</item>
+				</ul>
+				<div class="reply-box reply-box-ft" v-if="loginState">
+					<div class="reply-edit-content-wrap">
+						<img :src="avatar">
+						<input type="text" class="reply-edit-content" placeholder="留下你的评论" v-model="replyContent" @click="replyState = true" @keydown.enter="toReply">
 					</div>
-				</li>
-			</ul>
-			<div class="reply-box reply-box-ft" v-if="loginState">
-				<div class="reply-edit-content-wrap">
-					<img :src="user.avatar_url">
-					<input type="text" class="reply-edit-content" placeholder="留下你的评论" v-model="replyContent" v-touch="replyState = true" @keydown.enter="toReply">
-				</div>
-				<div class="reply-edit-btn-wrap" v-if="replyState">
-					<span class="reply-edit-btn" v-touch="replyState = false">取消</span>
-					<span class="reply-edit-btn" v-touch="toReply">评论</span>
+					<div class="reply-edit-btn-wrap" v-if="replyState">
+						<span class="reply-edit-btn" @click="replyState = false">取消</span>
+						<span class="reply-edit-btn" @click="toReply">评论</span>
+					</div>
 				</div>
 			</div>
 		</div>
+		<loading :loading="loading"></loading>
+		<modal :show="showLoginModal"></modal>
 	</div>
-	<loading :loading="loading"></loading>
-	<modal :show.sync="showLoginModal"></modal>
 </template>
 
 <script>
+	import Vue from "vue"
 	import {getTopic, like, reply} from "../api"
 	import {timeFormat, ISOTimeFormat} from "../filters"
 	import modal from "../components/modal.vue"
 	import loading from "../components/loading.vue"
+	import item from "../components/item.vue"
 
 	export default {
 		data() {
@@ -93,7 +100,7 @@
 					},
 					replies: []
 				},
-				user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},
+				//user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},
 				replyContent: "",
 				showLoginModal: false,
 				replyState: false
@@ -101,11 +108,12 @@
 		},
 		components: {
 			modal,
+			item,
 			loading
 		},
-		route: {
-			data() {
-				this.topic = {
+		beforeRouteEnter(to, from, next) {
+			next((vm) => {
+				vm.topic = {
 					author: {
 						loginname: "",
 						avatar_url: ""
@@ -113,16 +121,25 @@
 					replies: []
 				}
 
-				this.loading = true
-				this.getTopic()
-			}
+				vm.loading = true
+				vm.getTopic()
+			})
 		},
 		computed: {
+			userID() {
+				return localStorage.getItem("user") && JSON.parse(localStorage.getItem("user")).id
+			},
 			loginState() {
-				return !! localStorage.getItem("user")
+				return !! this.$store.state.accesstoken
 			},
 			avatar() {
-				return this.user.avatar_url
+				return this.$store.state.avatar
+			},
+			nickname() {
+				return this.$store.state.nickname
+			},
+			accesstoken() {
+				return this.$store.state.accesstoken
 			}
 		},
 		filters: {
@@ -131,17 +148,6 @@
 			},
 			timeFormat(value) {
 				return timeFormat(value)
-			}
-		},
-		directives: {
-			focus(value) {
-				if (! value) {
-					return
-				}
-
-				this.vm.$nextTick(() => {
-					this.el.focus()
-				})
 			}
 		},
 		methods: {
@@ -153,17 +159,17 @@
 				this.loading = false
 			},
 			async like(id, item) {
-				let token = this.user.token
+				let token = this.accesstoken
 				let data = await like(id, token)
 
 				if (data.success && data.action === "up") {
-					item.ups.push(this.user.id)
+					item.ups.push(this.userID)
 
 					return
 				}
 
 				if (data.success && data.action === "down") {
-					item.ups.$remove(this.user.id)
+					item.ups.splice(item.ups.indexOf(this.userID), 1)
 
 					return
 				}
@@ -174,7 +180,8 @@
 					return
 				}
 
-				let content = `${this.replyContent} <br> <br>${this.user.tail}`
+				const tail = JSON.parse(localStorage.getItem("user")).tail
+				let content = `${this.replyContent} <br> <br>${tail}`
 
 				this.reply(content)
 			},
@@ -191,12 +198,12 @@
 				this.reply(content, item)
 			},
 			async reply(content, item) {
-				let token = this.user.token
+				let {avatar, nickname, accesstoken} = this.$store.state
 
 				this.topic.replies.push({
 					author: {
-						loginname: this.user.loginname,
-						avatar_url: this.user.avatar_url
+						loginname: nickname,
+						avatar_url: avatar
 					},
 					create_at: ISOTimeFormat(+ new Date),
 					content: `<div class="markdown-text">${content}</div>`,
@@ -207,7 +214,7 @@
 					this.replyContent = ""
 					this.replyState = false
 
-					let data = await reply(token, this.$route.params.topicId, content)
+					let data = await reply(accesstoken, this.$route.params.topicId, content)
 
 					return
 				}
@@ -215,15 +222,16 @@
 				item.replyContent = ""
 				item.replyState = false
 
-				let data = await reply(token, this.$route.params.topicId, content, item.id)
+				let data = await reply(accesstoken, this.$route.params.topicId, content, item.id)
 			},
 			forLike() {
 				this.showLoginModal = true
 			},
 			del() {
-				alert("点了也木有用 还没做~~")
+				alert("点啥点，点了也木有用~~")
 			},
 			subReply(item) {
+				console.log(item)
 				Vue.set(item, "replyState", true)
 				Vue.set(item, "replyContent", "")
 			}

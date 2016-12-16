@@ -1,16 +1,10 @@
 <template>
-	<div :class="{show: show}">
-		<router-view keep-alive></router-view>
-		<tips :message.sync="message"></tips>
-	</div>
+	<keep-alive>
+		<router-view></router-view>
+	</keep-alive>
 </template>
 
 <script>
-	import directives from "./directives"
-	import tips from "./components/tips.vue"
-
-	Vue.directive("touch", directives)
-
 	export default {
 		data() {
 			return {
@@ -20,40 +14,23 @@
 				message: ""
 			}
 		},
-		components: {
-			tips
-		},
 		created() {
-			let deviceWidth = Math.min(640, document.documentElement.clientWidth)
+			const deviceWidth = Math.min(640, document.documentElement.clientWidth)
 
-			document.documentElement.style.fontSize = `${deviceWidth / 6.4}px`
+			document.documentElement.style.fontSize = `${deviceWidth / 7.5}px`
 		},
 		events: {
-			// loaded() {
-			// 	this.loading = false
-			// },
-			// loading() {
-			// 	this.loading = true
-			// },
 			showNav() {
 				this.showNav = true
 			},
 			hideNav() {
 				this.showNav = false
 			},
-			// login(data) {
-			// 	this.user = data
-			// },
 			showSlideNav() {
 				this.show = true
 
 				document.body.classList.add("show")
 			},
-			// hideSlideNav() {
-			// 	this.show = false
-
-			// 	document.body.classList.remove("show")
-			// },
 			closeLoading() {
 				this.loading = false
 			},

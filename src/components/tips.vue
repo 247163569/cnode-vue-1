@@ -1,7 +1,9 @@
 <template>
-	<div class="tips-wrap" transition="tips" v-if="message">
-		<div class="tips" v-text="message"></div>
-	</div>
+	<transition name="tips">
+		<div class="tips-wrap" v-if="message">
+			<div class="tips" v-text="message"></div>
+		</div>
+	</transition>
 </template>
 
 <script>
@@ -12,7 +14,7 @@
 				clearTimeout(this.timer)
 
 				this.timer = setTimeout(() => {
-					this.message = ""
+					this.$emit("cancelMessage")
 				}, 2000)
 			}
 		}

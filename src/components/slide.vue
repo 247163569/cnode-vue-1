@@ -1,23 +1,23 @@
 <template>
 	<section class="slide-nav-wrap" :class="{'show': show}">
 		<div class="slide-nav">
-			<div class="user" v-touch="goLogin">
-				<template v-if="! user.loginname">
+			<div class="user" @click="goLogin">
+				<template v-if="! avatar">
 					<span class="user-avatar-no"></span>
 					<span>登录</span>
 				</template>
-				<template v-if="user.loginname">
-					<img :src="user.avatar_url">
-					<span v-text="user.loginname"></span>
+				<template v-if="avatar">
+					<img :src="avatar">
+					<span v-text="nickname"></span>
 				</template>
 			</div>
 			<ul class="tag-list">
-				<li v-for="tag in tags" v-text="tag" v-touch="switchTag($index)"></li>
+				<li v-for="(tag, index) of tags" v-text="tag" @click="switchTag(index)"></li>
 			</ul>
 			<ul class="other-list">
-				<li v-for="item in items">
-					<span v-text="item" v-touch="goOther($index)" v-if="$index !== 1"></span>
-					<span v-text="item" v-touch="goOther($index)" :data-count="count" v-if="$index === 1"></span>
+				<li v-for="(item, index) of items">
+					<span v-text="item" @click="goOther(index)" v-if="index !== 1"></span>
+					<span v-text="item" @click="goOther(index)" :data-count="count" v-if="index === 1"></span>
 				</li>
 			</ul>
 		</div>
@@ -32,10 +32,10 @@
 		data() {
 			return {
 				count: "",
-				items: ["设置尾巴", "消息", "关于"],
+				items: ["设置尾巴", "关于"],
 				tags: ["全部", "精华", "分享", "问答", "招聘"],
-				other: ["/tail", "/message", "/about"],
-				user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
+				other: ["/tail", "/message", "/about"]
+				//user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
 			}
 		},
 		created() {
@@ -44,30 +44,33 @@
 				return
 			}
 
-			this.user.token && this.getMessageCount()
+			//this.user.token && this.getMessageCount()
 
 			this.$root.requestMessage = true
 		},
+		computed: {
+			avatar() {
+				return this.$store.state.avatar
+			},
+			nickname() {
+				return this.$store.state.nickname
+			}
+		},
 		methods: {
 			goLogin() {
-				this.$dispatch("hideSlideNav")
+				this.$emit("hideSlideNav")
 
-				this.$route.router.go("/login")
+				this.$router.push("/login")
 			},
 			switchTag(index) {
-				this.$dispatch("hideSlideNav")
+				this.$emit("hideSlideNav")
 
-				this.$dispatch("switchTag", index)
+				this.$emit("switchTag", index)
 			},
 			goOther(index) {
-				this.$dispatch("hideSlideNav")
+				this.$emit("hideSlideNav")
 
-				this.$route.router.go(this.other[index])
-			},
-			async getMessageCount() {
-				let data = await getMessageCount(this.user.token)
-
-				this.count = data.data ? data.data : ""
+				this.$router.push(this.other[index])
 			}
 		}
 	}

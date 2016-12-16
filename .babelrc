@@ -1,5 +1,7 @@
 {
-  "presets": ["es2015", "stage-3"],
-  "plugins": ["transform-runtime", "kneden"],
-  "comments": false
+    "presets": [
+    	"es2015",
+    	"es2017"
+    ],
+    "plugins": ["transform-runtime", "transform-object-rest-spread"]
 }

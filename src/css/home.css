@@ -28,12 +28,16 @@
 
 .title {
 	@extend text-align;
-	font-size: 0.3rem;
+	font-size: 0.36rem;
+}
+
+.appear-message {
+	visibility: visible;
 }
 
 .container {
-	padding-top: 0.7rem;
-	transition: all 0.3s ease;
+	padding-top: 0.8rem;
+	transition: all .25s ease;
 	background-color: #F2F2F2;
 
 	&.show {
@@ -54,7 +58,7 @@
 	@extend margin-bottom;
 }
 .avatar-cover {
-	width: 0.8rem;
+	width: 0.9rem;
 	@extend avatar;
 	margin-right: 0.3rem;
 	background: url(../images/loading.png) no-repeat center;
@@ -66,7 +70,7 @@
 .avatar {
 	@extend avatar;
 }
-.avatar-transition {
+.avatar-enter-active {
 	transition: all .3s;
 }
 .avatar-enter {
@@ -78,26 +82,25 @@
 .username {
 	margin-right: 0.1rem;
 	color: #F68030;
-	font-size: 0.24rem;
+	font-size: .28rem;
 }
 .label {
 	padding: 1px 0.08rem;
 	margin-right: 0.1rem;
 	color: #1ABC9C;
-	font-size: 0.18rem;
+	font-size: .22rem;
 	border: 1px solid #1ABC9C;
 }
 .item-time {
 	margin-top: 0.1rem;
 	color: #999;
-	font-size: 0.2rem;
+	font-size: .24rem;
 }
 
 .item-content {
 	padding: 0 0.2rem;
 	@extend margin-bottom;
 	color: #333;
-	font-size: 0.26rem;
 }
 .item-link {
 	display: block;
@@ -107,9 +110,9 @@
 	@extend flex;
 	color: #929292;
 	@extend text-align;
-	font-size: 0.22rem;
-	line-height: 0.7rem;
-	border-top: 1px solid #E6E6E6;
+	font-size: 0.26rem;
+	line-height: 0.8rem;
+	border-top: 1px solid #EEE;
 
 	& .btn {
 		flex: 1;
@@ -128,7 +131,7 @@
 	}
 
 	& .iconfont {
-		font-size: 0.24rem;
+		font-size: .28rem;
 		vertical-align: middle;
 	}
 }
@@ -151,7 +154,7 @@
 	z-index: 6;
 	left: -3.88rem;
 	background: url(../images/bg.png) center;
-	transition: all 0.3s ease;
+	transition: all .25s ease;
 
 	&.show {
 		transform: translateX(3.88rem);
