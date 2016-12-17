@@ -8,9 +8,10 @@ let data = {}
 localStorage.getItem("user") && (data = JSON.parse(localStorage.getItem("user")))
 
 const state = {
-	accesstoken: data.accesstoken || "",
+	tail: data.tail || "",
+	avatar: data.avatar || "",
 	nickname: data.nickname || "",
-	avatar: data.avatar || ""
+	accesstoken: data.accesstoken || ""
 }
 
 const mutations = {
@@ -22,12 +23,18 @@ const mutations = {
 	},
 	avatar(state, avatar) {
 		state.avatar = avatar
+	},
+	tail(state, tail) {
+		state.tail = tail
 	}
 }
 
 const getters = {
 	accesstoken: state => {
 		return state.accesstoken
+	},
+	tail: state => {
+		return state.tail
 	},
 	avatar: state => {
 		return state.avatar

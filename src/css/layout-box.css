@@ -24,7 +24,7 @@ $color: #22C37B;
 }
 
 .save-btn {
-	font-size: 0.26rem;
+	font-size: .3rem;
 	border-radius: 4px;
 	box-shadow: 0 6px #1B985F;
 	background-color: $color;

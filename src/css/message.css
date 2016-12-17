@@ -64,6 +64,10 @@
 .message-list .reply-item > div:nth-child(2) {
 	border-bottom: 1px solid #EEE;
 }
+
+.message-list .reply-item:last-child > div:nth-child(2) {
+	border-bottom: none;
+}
 .message-time {
 	color: #999;
 	font-size: .24rem;

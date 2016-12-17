@@ -1,5 +1,5 @@
-//import promise from "es6-promise"
-//import "whatwg-fetch"
+import promise from "es6-promise"
+import "whatwg-fetch"
 
 export let getList = async (page, tag) => {
 	let response = await fetch(`https://cnodejs.org/api/v1/topics?page=${page}&limit=20&tab=${tag}`, {
@@ -33,6 +33,23 @@ export let login = async (token) => {
 			"Content-Type": "application/x-www-form-urlencoded"
 		},
 		body: `accesstoken=${token}`
+	}).catch((error) => {
+		console.log(error)
+	})
+
+	return await response.json().catch((error) => {
+		console.log(error)
+	})
+}
+
+export let collect = async (params) => {
+	let response = await fetch(`https://cnodejs.org/api/v1/topic_collect/collect `, {
+		method: "POST",
+		mode: "cors",
+		headers: {
+			"Content-Type": "application/x-www-form-urlencoded"
+		},
+		body: params
 	}).catch((error) => {
 		console.log(error)
 	})

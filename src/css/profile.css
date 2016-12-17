@@ -1,7 +1,8 @@
 .profile-wrap {
-	padding-top: 0.7rem;
+	height: 100vh;
+	padding-top: .8rem;
+	box-sizing: border-box;
 	background-color: #F2F2F2;
-	padding-bottom: 4.3rem;
 }
 
 .profile {
@@ -15,20 +16,18 @@
 	border-bottom: 1px solid #EEE;
 }
 .profile-user img {
-	width: 0.9rem;
-	height: 0.9rem;
+	width: 1rem;
+	height: 1rem;
 	margin-right: 0.2rem;
 	border-radius: 100%;
 }
 .profile-user > div {
 	flex: 1;
 }
-.profile-username {
-	font-size: 0.25rem;
-}
 .profile-tail {
 	margin-top: 0.12rem;
-	color: #929292;
+	color: #999;
+	font-size: .28rem;
 }
 
 .profile-number {
@@ -42,18 +41,17 @@
 }
 .profile-number p {
 	color: #333;
-	font-size: 0.24rem;
 }
 
 .profile-list {
-	margin-top: 0.2rem;
-	font-size: 0.26rem;
+	margin-top: .2rem;
+	font-size: .28rem;
 	background-color: #FFF;
 }
 .profile-list li {
 	padding-left: 0.3rem;
 	position: relative;
-	line-height: 0.7rem;
+	line-height: .8rem;
 }
 .profile-list li:nth-child(1) {
 	border-bottom: 1px solid #EEE;

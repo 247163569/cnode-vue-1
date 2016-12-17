@@ -1,19 +1,19 @@
 <template>
-	<div id="app">
-		<header class="header header-flex" :class="{show: show}" @dblclick="backTop">
+	<div id="app" :class="{show: show}">
+		<header class="header header-flex" v-on:dblclick="backTop">
 			<div class="side-btn-wrap" @click="showSlideNav">
 				<div class="side-btn"></div>
 			</div>
 			<h1 class="title" v-text="tagText"></h1>
 			<!-- <router-link to="/post" class="post-btn">发表</router-link> -->
 			<router-link to="/message" class="post-btn" :class="{'appear-message': appearMessage}">
-				<svg class="octicon octicon-bell" height="16" version="1.1" viewBox="0 0 14 16" width="14">
+				<svg height="16" version="1.1" viewBox="0 0 14 16" width="16">
 					<path fill-rule="evenodd" d="M14 12v1H0v-1l.73-.58c.77-.77.81-2.55 1.19-4.42C2.69 3.23 6 2 6 2c0-.55.45-1 1-1s1 .45 1 1c0 0 3.39 1.23 4.16 5 .38 1.88.42 3.66 1.19 4.42l.66.58H14zm-7 4c1.11 0 2-.89 2-2H5c0 1.11.89 2 2 2z"></path>
 				</svg>
 			</router-link>
 		</header>
 		<slide :show="show" @hideSlideNav="hideSlideNav" @switchTag="switchTag"></slide>
-		<div class="container" :class="{show: show}">
+		<div class="container">
 			<ul>
 				<li class="item" v-for="item of list" :data-url="item.author.avatar_url" :data-id="item.id">
 					<div class="item-user-bar">

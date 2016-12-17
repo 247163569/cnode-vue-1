@@ -6,6 +6,9 @@ import Message from "../views/message.vue"
 //import Read from "../components/read.vue"
 //import Unread from "../components/unread.vue"
 import Post from "../views/post.vue"
+import Profile from "../views/profile.vue"
+import RecentTopic from "../views/recent_topic.vue"
+import RecentReply from "../views/recent_reply.vue"
 import Tail from "../views/tail.vue"
 import About from "../views/about.vue"
 
@@ -20,13 +23,6 @@ const routes = [
 	{
 		path: "/",
 		component: Home
-		// beforeEnter: (to, from, next) => {
-		// 	if (! localStorage.getItem("userID")) {
-		// 		next("/login")
-		// 	} else {
-		// 		next()
-		// 	}
-		// }
 	},
 	{
 		path: "/topic/:topicId",
@@ -38,15 +34,62 @@ const routes = [
 	},
 	{
 		path: "/message",
-		component: Message
+		component: Message,
+		beforeEnter: (to, from, next) => {
+			if (! localStorage.getItem("user")) {
+				next("/login")
+			} else {
+				next()
+			}
+		}
 	},
 	{
 		path: "/post",
-		component: Post
+		component: Post,
+		beforeEnter: (to, from, next) => {
+			if (! localStorage.getItem("user")) {
+				next("/login?redirect=post")
+			} else {
+				next()
+			}
+		}
 	},
 	{
 		path: "/tail",
 		component: Tail
+	},
+	{
+		path: "/profile",
+		component: Profile,
+		beforeEnter: (to, from, next) => {
+			if (! localStorage.getItem("user")) {
+				next("/login?redirect=profile")
+			} else {
+				next()
+			}
+		}
+	},
+	{
+		path: "/recent_topic",
+		component: RecentTopic,
+		beforeEnter: (to, from, next) => {
+			if (! localStorage.getItem("user")) {
+				next("/login?redirect=profile")
+			} else {
+				next()
+			}
+		}
+	},
+	{
+		path: "/recent_reply",
+		component: RecentReply,
+		beforeEnter: (to, from, next) => {
+			if (! localStorage.getItem("user")) {
+				next("/login?redirect=profile")
+			} else {
+				next()
+			}
+		}
 	},
 	{
 		path: "/about",

@@ -78,6 +78,14 @@ export default {
 			}
 		]
 	},
+	vue: {
+		postcss: [
+			precss,
+			autoprefixer({
+				browsers: "> 5%"
+			})
+		]
+	},
 	postcss: [
 		precss,
 		autoprefixer({

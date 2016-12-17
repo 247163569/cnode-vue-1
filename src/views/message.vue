@@ -8,7 +8,7 @@
 			</a>
 			<h2 class="title">消息</h2>
 		</header>
-		<ul class="message-list">
+		<ul class="message-list" v-if="! loading">
 			<item v-for="item of list" :item="item" type="message">
 				<div>
 					<p class="flex">
@@ -19,6 +19,7 @@
 				</div>
 			</item>
 		</ul>
+		<loading :loading="loading"></loading>
 	</div>
 </template>
 
@@ -26,11 +27,13 @@
 	import {getMessages} from "../api"
 	import {timeFormat} from "../filters"
 	import item from "../components/item.vue"
+	import loading from "../components/loading.vue"
 
 	export default {
 		data() {
 			return {
-				list: []
+				list: [],
+				loading: true
 			}
 		},
 		beforeRouteEnter(to, from, next) {
@@ -44,7 +47,8 @@
 			}
 		},
 		components: {
-			item
+			item,
+			loading
 		},
 		methods: {
 			async getMessages() {
@@ -52,6 +56,8 @@
 				const data = await getMessages(token)
 
 				this.list = data.data.has_read_messages
+
+				this.loading = false
 			}
 		}
 	}

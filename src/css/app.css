@@ -16,6 +16,7 @@ body.bg {
 a {
 	color: #333;
 	text-decoration: none;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 img {
 	display: block;
@@ -53,6 +54,9 @@ h1, h2, h4, h5 {
 	margin: 0 auto;
 	overflow: hidden;
 }
+#app.show header, #app.show .slide-nav-wrap, #app.show .container {
+	transform: translateX(3.88rem);
+}
 .scroll-hide {
 	height: 100%;
 	overflow-x: hidden;
@@ -74,9 +78,9 @@ h1, h2, h4, h5 {
 	background-color: #FFF;
 	transition: all 0.3s;
 } */
-.header.show {
+/* .header.show {
 	transform: translateX(3.88rem);
-}
+} */
 .side-btn-wrap {
 	display: flex;
 	width: 0.8rem;

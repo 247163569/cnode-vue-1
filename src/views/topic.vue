@@ -19,6 +19,10 @@
 						<span>
 							{{topic.create_at | timeFormat}}
 						</span>
+						<template v-if="$store.state.avatar">
+							<span class="collect" @click="collect" v-if="! isCollect">收藏</span>
+							<span class="collect" v-else>已收藏</span>
+						</template>
 					</p>
 				</div>
 				<div v-html="topic.content"></div>
@@ -39,11 +43,12 @@
 								<template v-if="loginState">
 									<template v-if="item.author.loginname !== nickname">
 										<span class="reply-btn" @click="subReply(item)">回复</span>
-										<span class="like" @click="like(item.id, item)" v-text="item.ups.includes(userID) ? '取消赞' : '赞'"></span>
+										<span class="like" @click="like(item.id, item)" v-text="item.ups.indexOf(userID) !== -1 ? '取消赞' : '赞'"></span>
 										<span class="like-count" v-text="item.ups.length + ' 赞'"></span>
 									</template>
 									<template v-else>
 										<span class="del" @click="del">删除</span>
+										<span class="like-count" v-text="item.ups.length + ' 赞'"></span>
 									</template>
 								</template>
 								<template v-else>
@@ -67,7 +72,7 @@
 				<div class="reply-box reply-box-ft" v-if="loginState">
 					<div class="reply-edit-content-wrap">
 						<img :src="avatar">
-						<input type="text" class="reply-edit-content" placeholder="留下你的评论" v-model="replyContent" @click="replyState = true" @keydown.enter="toReply">
+						<input type="text" class="reply-edit-content" placeholder="留下你的评论" v-model="replyContent" @click="replyState = true" @keydown.enter="toReply" ref="commentInput">
 					</div>
 					<div class="reply-edit-btn-wrap" v-if="replyState">
 						<span class="reply-edit-btn" @click="replyState = false">取消</span>
@@ -77,17 +82,16 @@
 			</div>
 		</div>
 		<loading :loading="loading"></loading>
-		<modal :show="showLoginModal"></modal>
 	</div>
 </template>
 
 <script>
 	import Vue from "vue"
-	import {getTopic, like, reply} from "../api"
+	import {getTopic, like, reply, collect} from "../api"
 	import {timeFormat, ISOTimeFormat} from "../filters"
-	import modal from "../components/modal.vue"
 	import loading from "../components/loading.vue"
 	import item from "../components/item.vue"
+	import {serialize} from "../utils"
 
 	export default {
 		data() {
@@ -102,12 +106,11 @@
 				},
 				//user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},
 				replyContent: "",
-				showLoginModal: false,
+				isCollect: false,
 				replyState: false
 			}
 		},
 		components: {
-			modal,
 			item,
 			loading
 		},
@@ -124,6 +127,11 @@
 				vm.loading = true
 				vm.getTopic()
 			})
+		},
+		beforeRouteLeave(to, from, next) {
+			document.title = this.$title
+
+			next()
 		},
 		computed: {
 			userID() {
@@ -156,6 +164,11 @@
 
 				this.topic = data.data
 
+				this.isCollect = data.data.is_collect
+
+				this.$title = document.title
+				document.title = data.data.title
+
 				this.loading = false
 			},
 			async like(id, item) {
@@ -174,6 +187,15 @@
 					return
 				}
 
+			},
+			async collect() {
+				const params = {
+					accesstoken: this.$store.state.accesstoken,
+					topic_id: this.$route.params.topicId
+				}
+				const data = await collect(serialize(params))
+
+				data.success && (this.isCollect = true)
 			},
 			toReply() {
 				if (! this.replyContent) {
@@ -214,6 +236,8 @@
 					this.replyContent = ""
 					this.replyState = false
 
+					this.$refs.commentInput.blur()
+
 					let data = await reply(accesstoken, this.$route.params.topicId, content)
 
 					return
@@ -225,7 +249,7 @@
 				let data = await reply(accesstoken, this.$route.params.topicId, content, item.id)
 			},
 			forLike() {
-				this.showLoginModal = true
+				this.$router.push("/login")
 			},
 			del() {
 				alert("点啥点，点了也木有用~~")

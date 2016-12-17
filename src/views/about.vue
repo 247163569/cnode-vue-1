@@ -3,6 +3,9 @@
 <template>
 	<div id="app">
 		<header class="header topic-hd">
+			<router-link to="/" class="back-btn-wrap">
+				<i class="back-btn"></i>
+			</router-link>
 			<h2 class="title">关于</h2>
 		</header>
 		<ul class="about-list">

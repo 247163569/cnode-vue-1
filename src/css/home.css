@@ -39,10 +39,11 @@
 	padding-top: 0.8rem;
 	transition: all .25s ease;
 	background-color: #F2F2F2;
+	will-change: transform;
 
-	&.show {
+	/* &.show {
 		transform: translateX(3.88rem);
-	}
+	} */
 }
 
 .item {
@@ -94,7 +95,7 @@
 .item-time {
 	margin-top: 0.1rem;
 	color: #999;
-	font-size: .24rem;
+	font-size: .22rem;
 }
 
 .item-content {
@@ -155,10 +156,11 @@
 	left: -3.88rem;
 	background: url(../images/bg.png) center;
 	transition: all .25s ease;
+	will-change: transform;
 
-	&.show {
+	/* &.show {
 		transform: translateX(3.88rem);
-	}
+	} */
 }
 .slide-nav {
 	width: 100%;

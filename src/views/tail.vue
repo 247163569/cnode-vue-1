@@ -1,16 +1,16 @@
 <template>
 	<div id="app">
 		<header class="header topic-hd">
-			<router-link to="/" class="back-btn-wrap">
+			<a class="back-btn-wrap" href="javascript:;" @click="back">
 				<i class="back-btn"></i>
-			</router-link>
+			</a>
 			<h2 class="title">设置尾巴</h2>
 		</header>
 		<div class="box">
 			<input class="input-text" type="text" placeholder="造个尾巴玩玩吧" autofocus v-model="tail" @keydown.enter="resetTail">
 			<a class="btn save-btn" href="javascript:;" @click="resetTail">保存</a>
 		</div>
-		<tips :message.sync="message"></tips>
+		<tips :message="message" @cancelMessage="message = ''"></tips>
 	</div>
 </template>
 
@@ -38,6 +38,9 @@
 			tips
 		},
 		methods: {
+			back() {
+				this.$router.go(-1)
+			},
 			resetTail() {
 				if (! this.tail) {
 					this.message = "尾巴不能木有啊"
@@ -51,9 +54,13 @@
 
 				localStorage.setItem("user", JSON.stringify(user))
 
+				this.$store.commit("tail", user.tail)
+
+				this.tail = ""
+
 				//this.$dispatch("tailChanged", "小尾巴修改成功~~")
 
-				this.$router.push("/")
+				this.back()
 			}
 		}
 	}

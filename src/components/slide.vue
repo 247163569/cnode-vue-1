@@ -1,15 +1,13 @@
 <template>
-	<section class="slide-nav-wrap" :class="{'show': show}">
+	<section class="slide-nav-wrap">
 		<div class="slide-nav">
-			<div class="user" @click="goLogin">
-				<template v-if="! avatar">
-					<span class="user-avatar-no"></span>
-					<span>登录</span>
-				</template>
-				<template v-if="avatar">
-					<img :src="avatar">
-					<span v-text="nickname"></span>
-				</template>
+			<div class="user" @click="goLogin" v-if="! avatar">
+				<span class="user-avatar-no"></span>
+				<span>登录</span>
+			</div>
+			<div class="user" v-else @click="profile">
+				<img :src="avatar">
+				<span v-text="nickname"></span>
 			</div>
 			<ul class="tag-list">
 				<li v-for="(tag, index) of tags" v-text="tag" @click="switchTag(index)"></li>
@@ -34,7 +32,7 @@
 				count: "",
 				items: ["设置尾巴", "关于"],
 				tags: ["全部", "精华", "分享", "问答", "招聘"],
-				other: ["/tail", "/message", "/about"]
+				other: ["/tail", "/about"]
 				//user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
 			}
 		},
@@ -61,6 +59,9 @@
 				this.$emit("hideSlideNav")
 
 				this.$router.push("/login")
+			},
+			profile() {
+				this.$router.push("/profile")
 			},
 			switchTag(index) {
 				this.$emit("hideSlideNav")
