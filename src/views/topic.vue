@@ -3,9 +3,9 @@
 <template>
 	<div id="app">
 		<header class="header">
-			<router-link to="/" class="back-btn-wrap">
+			<a class="back-btn-wrap" href="javascript:history.go(-1)">
 				<i class="back-btn"></i>
-			</router-link>
+			</a>
 			<h2 class="title">帖子正文</h2>
 		</header>
 		<div class="topic-container" v-if="! loading">

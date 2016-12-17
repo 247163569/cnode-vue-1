@@ -73,6 +73,8 @@
 	font-size: .24rem;
 }
 .origin {
+	display: block;
+	margin: .3rem 0;
 	color: #999;
 	font-size: .26rem;
 }
