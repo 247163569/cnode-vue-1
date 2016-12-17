@@ -16,6 +16,7 @@
 						<span class="message-time">{{item.create_at | timeFormat}}</span>
 					</p>
 					<p v-html="item.reply.content"></p>
+					<p class="origin">来自：{{item.topic.title}}</p>
 				</div>
 			</item>
 		</ul>

@@ -104,6 +104,10 @@
 		margin: 0.15rem 0;
 	}
 
+	& p.origin {
+		margin-top: .3rem;
+	}
+
 	& .avatar {
 		width: .8rem;
 		height: .8rem;
