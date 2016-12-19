@@ -20,7 +20,7 @@
 						</p>
 					</div>
 				</div>
-				<p v-text="item.title"></p>
+				<router-link :to="'/topic/' + item.id" v-text="item.title"></router-link>
 			</li>
 		</ul>
 	</div>

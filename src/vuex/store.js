@@ -30,18 +30,10 @@ const mutations = {
 }
 
 const getters = {
-	accesstoken: state => {
-		return state.accesstoken
-	},
-	tail: state => {
-		return state.tail
-	},
-	avatar: state => {
-		return state.avatar
-	},
-	nickname: state => {
-		return state.nickname
-	}
+	accesstoken: state => state.accesstoken,
+	tail: state => state.tail,
+	avatar: state => state.avatar,
+	nickname: state => state.nickname
 }
 
 export default new Vuex.Store({

@@ -67,6 +67,9 @@
 	border-right: 1px solid #929292;
 	transform: rotate(45deg) translateY(-50%);
 }
+.profile-list li.no-arrow::after {
+	display: none;
+}
 .profile-list a {
 	display: block;
 }

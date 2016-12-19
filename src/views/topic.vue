@@ -27,7 +27,7 @@
 				</div>
 				<div v-html="topic.content"></div>
 			</div>
-			<div class="reply">
+			<div class="reply" ref="reply">
 				<div class="reply-count">
 					{{topic.reply_count | textFormat}}
 				</div>
@@ -170,6 +170,10 @@
 				document.title = data.data.title
 
 				this.loading = false
+
+				this.$nextTick(() => {
+					this.$route.hash && this.$refs.reply.scrollIntoView()
+				})
 			},
 			async like(id, item) {
 				let token = this.accesstoken

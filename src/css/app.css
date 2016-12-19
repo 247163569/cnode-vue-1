@@ -115,6 +115,31 @@ h1, h2, h4, h5 {
 	padding-right: .2rem;
 	text-align: center;
 	visibility: hidden;
+	transform-origin: top center;
+}
+.post-btn.actived {
+	animation: shake 2.2s infinite;
+}
+
+@keyframes shake {
+	0% {
+		transform: rotate(0);
+	}
+	5% {
+		transform: rotate(12deg);
+	}
+	10% {
+		transform: rotate(-12deg);
+	}
+	15% {
+		transform: rotate(12deg);
+	}
+	20% {
+		transform: rotate(-12deg);
+	}
+	30% {
+		transform: rotate(0);
+	}
 }
 
 .mask {
@@ -169,17 +194,17 @@ h1, h2, h4, h5 {
 	font-size: 0.5rem;
 }
 
-.loading-cover {
+.loading-cover, .no-data-cover {
 	display: flex;
 	width: 7.5rem;
 	height: 100%;
 	position: fixed;
 	top: 0;
 	z-index: 4;
-	color: #666;
-	background-color: #F8F8F8;
+	color: #999;
+	background-color: #F2F2F2;
 }
-.loading-text {
+.loading-text, .no-data-text {
 	margin: auto;
 }
 .loading-enter-active, .loading-leave-active {
@@ -191,8 +216,8 @@ h1, h2, h4, h5 {
 
 .loading-wrap {
 	padding: 0.2rem 0;
-	color: #333;
-	font-size: 0.24rem;
+	color: #999;
+	font-size: .26rem;
 	text-align: center;
 	line-height: 0.8rem;
 }
@@ -217,17 +242,36 @@ h1, h2, h4, h5 {
 }
 .back-top {
 	width: .8rem;
+	height: .8rem;
 	position: fixed;
 	right: 0.6rem;
 	bottom: 2rem;
 	color: #FFF;
 	font-size: .6rem;
 	text-align: center;
-	line-height: .8rem;
 	border-radius: 50%;
 	box-shadow: 0 0 8px #1ABC9C;
 	background-color: #1ABC9C;
 	/* visibility: hidden; */
+
+	&::before, &::after {
+		content: "";
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		background-color: #FFF;
+		transform: translate(-50%, -50%);
+	}
+
+	&::before {
+		width: 50%;
+		height: 2px;
+	}
+
+	&::after {
+		width: 2px;
+		height: 50%;
+	}
 }
 .back-top i {
 	font-size: 0.5rem;

@@ -1,7 +1,7 @@
 .post-content {
 	width: 100%;
 	min-height: 5rem;
-	padding: 0 .3rem;
+	padding: 0 .2rem;
 	border: none;
 	outline: none;
 	resize: none;
@@ -10,7 +10,7 @@
 }
 
 .post-list {
-	margin: 0.9rem 0 0.4rem;
+	margin: .9rem 0 .2rem;
 }
 .post-item {
 	padding: 0.2rem;

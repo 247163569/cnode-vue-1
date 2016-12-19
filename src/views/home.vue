@@ -6,7 +6,7 @@
 			</div>
 			<h1 class="title" v-text="tagText"></h1>
 			<!-- <router-link to="/post" class="post-btn">发表</router-link> -->
-			<router-link to="/message" class="post-btn" :class="{'appear-message': appearMessage}">
+			<router-link to="/message" class="post-btn" :class="{'appear-message': appearMessage, actived: actived}">
 				<svg height="16" version="1.1" viewBox="0 0 14 16" width="16">
 					<path fill-rule="evenodd" d="M14 12v1H0v-1l.73-.58c.77-.77.81-2.55 1.19-4.42C2.69 3.23 6 2 6 2c0-.55.45-1 1-1s1 .45 1 1c0 0 3.39 1.23 4.16 5 .38 1.88.42 3.66 1.19 4.42l.66.58H14zm-7 4c1.11 0 2-.89 2-2H5c0 1.11.89 2 2 2z"></path>
 				</svg>
@@ -51,14 +51,14 @@
 							</span>
 						</div>
 						<div class="btn reply-btn">
-							<router-link :to="'/topic/' + item.id">
+							<router-link :to="'/topic/' + item.id + '#comment'">
 								<span>
 									<i class="iconfont">&#xf0217;</i>
 									{{item.reply_count}}
 								</span>
 							</router-link>
 						</div>
-						<div class="btn share_btn">
+						<div class="btn share_btn" @click="share">
 							<i class="iconfont">&#xf01ba;</i>
 							分享
 						</div>
@@ -74,7 +74,7 @@
 		<!-- <div class="back-top" @click="backTop" v-if="scrollTop">
 			<i class="iconfont">&#xe758;</i>
 		</div> -->
-		<router-link to="/post" class="back-top">+</router-link>
+		<router-link to="/post" class="back-top"></router-link>
 	</div>
 </template>
 
@@ -93,6 +93,7 @@
 				locked: false,
 				loading: true,
 				show: false,
+				actived: false,
 				list: [],
 				$items: [],
 				itemss: [],
@@ -124,10 +125,14 @@
 		},
 		beforeRouteEnter(to, from, next) {
 			next((vm) => {
+				vm.getMessageCount()
+
 				window.addEventListener("scroll", vm.scroll, false)
 			})
 		},
 		beforeRouteLeave(to, from, next) {
+			this.show = false
+
 			window.removeEventListener("scroll", this.scroll, false)
 
 			next()
@@ -167,9 +172,9 @@
 		},
 		methods: {
 			async getMessageCount() {
-				let data = await getMessageCount(this.user.token)
+				const data = await getMessageCount(this.$store.state.accesstoken)
 
-				this.count = data.data ? data.data : ""
+				data.data && (this.actived = true)
 			},
 			async getList() {
 				let data = await getList(this.page, this.tag)
@@ -272,6 +277,15 @@
 
 				scroll.scrollTop = 0
 				//requestAnimationFrame(this.backTop)
+			},
+			share() {
+				// alert(navigator.share)
+				// navigator.share({
+				//     title: document.title,
+				//     text: "Hello World",
+				//     url: window.location.href
+				// }).then(() => alert('Successful share'))
+				// .catch(error => alert('Error sharing:', error))
 			}
 		},
 		mounted() {

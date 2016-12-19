@@ -33,7 +33,6 @@
 				</div>
 			</div>
 			<ul class="profile-list">
-				<li>昵称</li>
 				<li v-for="item of definition">
 					<router-link :to="item.path" v-text="item.text"></router-link>
 				</li>
@@ -41,6 +40,10 @@
 			<ul class="profile-list">
 				<!-- <li v-text="item" ></li> -->
 				<router-link :to="item.path" tag="li" v-for="item of items" v-text="item.text"></router-link>
+			</ul>
+			<ul class="profile-list">
+				<!-- <li class="no-arrow">昵称</li> -->
+				<li class="no-arrow" @click="logout">退出当前账号</li>
 			</ul>
 		</div>
 	</div>
@@ -106,6 +109,11 @@
 
 				localStorage.setItem("topic", JSON.stringify(data.data.recent_topics))
 				localStorage.setItem("reply", JSON.stringify(data.data.recent_replies))
+			},
+			logout() {
+				localStorage.clear()
+
+				location.href = "/"
 			}
 		}
 	}

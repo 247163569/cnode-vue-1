@@ -72,6 +72,11 @@
 	color: #999;
 	font-size: .24rem;
 }
+.message-name {
+	display: block;
+	margin-bottom: .1rem;
+	font-size: .24rem;
+}
 .origin {
 	display: block;
 	margin: .3rem 0;
@@ -79,7 +84,7 @@
 	font-size: .26rem;
 }
 .avatar {
-	width: 0.8rem;
+	width: .8rem;
 	margin-right: 0.2rem;
 }
 
