@@ -125,7 +125,7 @@
 		},
 		beforeRouteEnter(to, from, next) {
 			next((vm) => {
-				vm.getMessageCount()
+				vm.appearMessage && vm.getMessageCount()
 
 				window.addEventListener("scroll", vm.scroll, false)
 			})
