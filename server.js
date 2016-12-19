@@ -1,10 +1,14 @@
-var express = require("express")
-var app = express()
+const path = require("path")
+const express = require("express")
+const app = express()
 
-app.use(express.static(__dirname))
+app.set("x-powered-by", false)
+
+app.use(express.static(path.join(__dirname, "dist")))
+app.use("/static/cnode/", express.static(path.join(__dirname, "dist")))
 
 app.get("*", (req, res) => {
 	res.sendFile(path.resolve(__dirname, "./index.html"))
 })
 
-app.listen(process.env.PORT || 8080)
+app.listen(8080)
