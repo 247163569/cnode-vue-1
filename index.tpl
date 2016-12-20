@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 
-<meta http-equiv="origin-trial" content="**insert your token as provided in the the email here**">
+<meta http-equiv="origin-trial" data-feature="Web Share" data-expires="2017-01-30" content="ApSj6AsgwclDr116Q1i4JNatJlp9pSytSCRp0zE1M8Clf/Fm4JyqPrwwOduzLVwSlKqnaApSPOd3VJqMH+GWIwcAAABReyJvcmlnaW4iOiAiaHR0cHM6Ly9oYW55YW5nLm1lOjQ0MyIsICJmZWF0dXJlIjogIldlYlNoYXJlIiwgImV4cGlyeSI6IDE0ODU3ODg4OTV9">
 
 <meta name="theme-color" content="#1ABC9C">
 <meta name="x5-fullscreen" content="true">
