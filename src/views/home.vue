@@ -58,7 +58,7 @@
 								</span>
 							</router-link>
 						</div>
-						<div class="btn share_btn" @click="share">
+						<div class="btn share_btn" @click="share(item.id)">
 							<i class="iconfont">&#xf01ba;</i>
 							分享
 						</div>
@@ -69,6 +69,7 @@
 				<div class="loading-text">(´・ω・｀)正在加载...</div>
 			</div>
 		</div>
+		<tips :message="message" @cancelMessage="message = ''"></tips>
 		<loading :loading="loading"></loading>
 		<div class="mask" v-if="show" @click="hideSlideNav" @touchmove="touchmove"></div>
 		<!-- <div class="back-top" @click="backTop" v-if="scrollTop">
@@ -83,11 +84,13 @@
 	import {timeFormat} from "../filters"
 	import loading from "../components/loading.vue"
 	import slide from "../components/slide.vue"
+	import tips from "../components/tips.vue"
 
 	export default {
 		data() {
 			return {
 				count: 0,
+				message: "",
 				page: 1,
 				//scrollTop: false,
 				locked: false,
@@ -138,6 +141,7 @@
 			next()
 		},
 		components: {
+			tips,
 			slide,
 			loading
 		},
@@ -278,14 +282,12 @@
 				scroll.scrollTop = 0
 				//requestAnimationFrame(this.backTop)
 			},
-			share() {
-				// alert(navigator.share)
-				// navigator.share({
-				//     title: document.title,
-				//     text: "Hello World",
-				//     url: window.location.href
-				// }).then(() => alert('Successful share'))
-				// .catch(error => alert('Error sharing:', error))
+			share(id) {
+				typeof navigator.share !== "undefined" ? navigator.share({
+				    title: "Vue.js 版 cnode.org 社区",
+				    //text: "Hello World",
+				    url: `https://hanyang.me/cnode/topic/${id}`
+				}) : (this.message = "分享功能暂只支持手机版 chrome 55")
 			}
 		},
 		mounted() {
